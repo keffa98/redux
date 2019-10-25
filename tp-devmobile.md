@@ -44,12 +44,14 @@ Mettre en place cette fonctionnalité.
 
 # Groupes et fonctionnement
 
-Le projet est a développé en groupe de 2 (DEUX) personnes.
+Le projet est a développer en groupe de 2 (DEUX) personnes.
 Tous les groupes seront définis en cours au début de la session. Aucun changement n'est possible dans la journée.
 
 Les étudiants sont encouragés (mais pas obligés) à mettre en place un système de contrôle des sources de type Git ou équivalent, afin d'affecter et partager efficacement les fichiers de codes et autres composants numériques du projet (fichiers sources, descripteurs de déploiement, documents de recherche, cas d'utilisation, suites de tests, etc.).
 
-Le rendu sera fait par mail à l'addresse vincent.leclerc@ynov.com
+Le rendu sera fait par mail à l'addresse vincent.leclerc@ynov.com.
+Vous devez envoyé UN mail par groupe avec le nom des 2 personnes et un lien vers un git ou sera posé vos sources.
 L'heure maximum du rendu est 18h15, tout mail arrivé après cet horaire ne sera pas corrigé.
 UN rendu par groupe.
+L'application devra s'éxécuter pour être notée.
 Toute absence (non justifiée) de rendu ou retard de rendu entrainera un 0 (ZERO) pour les membres du groupe.
