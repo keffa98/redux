@@ -16,3 +16,31 @@ export const initAsync = () => {
         });
     };
 }
+
+export const addAsync = () => {
+    return dispatch => {
+        AsyncStorage.getItem('cities').then(data => {
+            let tab = [];
+            if (data !== null) {
+                tab = JSON.parse(data);
+            }
+            tab.push(this.state.cityName);
+            AsyncStorage.setItem('cities', JSON.stringify(tab))
+                .then(() => {
+                    return dispatch({ type: CITIES_INIT, payload: tab });
+                });
+        });
+    }
+}
+export const deleteAsync = (cityName) => {
+    return dispatch => {
+        AsyncStorage.getItem('cities').then(data => {
+            const tab = JSON.parse(data);
+            tab.splice(tab.findIndex(e => e === cityName), 1);
+            AsyncStorage.setItem('cities', JSON.stringify(tab))
+                .then(() => {
+                    return dispatch({ type: CITIES_INIT, payload: JSON.parse(data) });
+                });
+        });
+    };
+}

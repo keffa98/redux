@@ -5,7 +5,7 @@ import { NavigationEvents } from 'react-navigation';
 import ItemWeather from '../components/ItemWeather';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { init, initAsync } from '../redux/actions/CitiesActions';
+import { init, initAsync, deleteAsync } from '../redux/actions/CitiesActions';
 
 class FavoritesPage extends React.Component {
 
@@ -58,13 +58,14 @@ class FavoritesPage extends React.Component {
     }
 
     deleteCity(cityName) {
-        let tab = [...this.state.cities];
+        this.props.actions.deleteCity(cityName);
+        /*let tab = [...this.state.cities];
         tab.splice(tab.findIndex(e => e === cityName), 1);
         AsyncStorage.setItem('cities', JSON.stringify(tab))
             .then(() => {
                 this.props.navigation.setParams({ count: tab.length });
                 this.setState({ cities: tab });
-            });
+            });*/
     }
 
     render() {
@@ -97,7 +98,8 @@ const mapStateToProps = (stateStore) => {
 
 const mapActionsToProps = (payload) => ({
     actions: {
-        initCities: bindActionCreators(initAsync, payload)
+        initCities: bindActionCreators(initAsync, payload),
+        deleteCity: bindActionCreators(deleteAsync, payload),
     }
 });
 

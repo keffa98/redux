@@ -2,7 +2,8 @@ import React from 'react';
 import { Text, View, Button, TextInput, AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import WeatherService from '../services/weather-service';
-
+import { addAsync } from '../redux/actions/CitiesActions';
+import { connect } from 'react-redux';
 
 class AddFavoritesPage extends React.Component {
 
@@ -21,7 +22,8 @@ class AddFavoritesPage extends React.Component {
     }
 
     onPressAdd() {
-        this.serv.getWeatherHome(this.state.cityName).then(resp => {
+        this.props.actions.addCity(this.state.cityName);
+        /*this.serv.getWeatherHome(this.state.cityName).then(resp => {
             AsyncStorage.getItem('cities').then(data => {
                 let tab = [];
                 if (data !== null) {
@@ -38,7 +40,7 @@ class AddFavoritesPage extends React.Component {
             });
         }).catch(err => {
             alert(`Pas de données pour la ville ${this.state.cityName}`);
-        });
+        });*/
     }
 
 
@@ -54,4 +56,11 @@ class AddFavoritesPage extends React.Component {
     }
 }
 
-export default AddFavoritesPage;
+
+const mapActionsToProps = (payload) => ({
+    actions: {
+        addCity: bindActionCreators(addAsync, payload)
+    }
+});
+
+export default connect(null, mapActionsToProps)(AddFavoritesPage);
