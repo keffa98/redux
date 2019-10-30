@@ -3,6 +3,9 @@ import { Text, View, Button, AsyncStorage, FlatList, RefreshControl } from 'reac
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationEvents } from 'react-navigation';
 import ItemWeather from '../components/ItemWeather';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { init } from '../redux/actions/CitiesActions';
 
 class FavoritesPage extends React.Component {
 
@@ -28,6 +31,7 @@ class FavoritesPage extends React.Component {
     }
 
     componentDidMount() {
+        //console.log('props', this.props);
 
         //this.refresh();
         /*this.setState({
@@ -43,10 +47,11 @@ class FavoritesPage extends React.Component {
         this.setState({ refreshing: true });
         AsyncStorage.getItem('cities').then((data) => {
             this.props.navigation.setParams({ count: JSON.parse(data).length });
-            this.setState({ cities: JSON.parse(data).sort(), refreshing: false });
-
-            //console.log(data);
+            //this.setState({ cities: JSON.parse(data).sort(), refreshing: false });
+            this.props.actions.loadCities(JSON.parse(data));
+            this.setState({ refreshing: false });
         });
+        //this.setState({cities: this.props.cities});
     }
 
     deleteCity(cityName) {
@@ -60,12 +65,12 @@ class FavoritesPage extends React.Component {
     }
 
     render() {
-
+        console.log('render');
         return (
 
             <View style={{ flex: 1 }}>
                 <NavigationEvents onDidFocus={() => this.refresh()} />
-                <FlatList data={this.state.cities}
+                <FlatList data={this.props.cities}
                     refreshControl={<RefreshControl refreshing={this.state.refreshing}
                         onRefresh={() => this.refresh()} />}
                     renderItem={(element) => (
@@ -80,4 +85,17 @@ class FavoritesPage extends React.Component {
     }
 }
 
-export default FavoritesPage;
+const mapStateToProps = (stateStore) => {
+
+    return ({
+        cities: stateStore.citiesReducer.cities
+    });
+}
+
+const mapActionsToProps = (payload) => ({
+    actions: {
+        loadCities: bindActionCreators(init, payload)
+    }
+});
+
+export default connect(mapStateToProps, mapActionsToProps)(FavoritesPage);

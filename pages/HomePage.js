@@ -4,18 +4,20 @@ import WeatherService from '../services/weather-service';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Loading from '../components/Loading';
+import { connect } from 'react-redux';
 
 
 class HomePage extends React.Component {
 
-    serv = new WeatherService();
+    // serv = new WeatherService();
 
     state = {
         wea: null
     };
 
     componentDidMount() {
-        this.serv.getWeatherHome().then((resp) => {
+
+        this.props.weatherServ.getWeatherHome().then((resp) => {
             this.setState({ wea: resp.data });
         });
 
@@ -72,7 +74,13 @@ const Sunset = (props) => {
     );
 }
 
-export default HomePage;
+const mapStateToProps = (stateStore) => {
+    return ({
+        weatherServ: stateStore.serviceReducer.weatherService
+    })
+};
+
+export default connect(mapStateToProps)(HomePage);
 
 const styles = StyleSheet.create({
     Clear: {
