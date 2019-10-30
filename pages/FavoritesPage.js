@@ -5,7 +5,7 @@ import { NavigationEvents } from 'react-navigation';
 import ItemWeather from '../components/ItemWeather';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { init } from '../redux/actions/CitiesActions';
+import { init, initAsync } from '../redux/actions/CitiesActions';
 
 class FavoritesPage extends React.Component {
 
@@ -41,16 +41,19 @@ class FavoritesPage extends React.Component {
                 { name: 'Pekin', temp: 12, main: 'clear' }
             ]
         });*/
+
     }
 
     refresh() {
         this.setState({ refreshing: true });
-        AsyncStorage.getItem('cities').then((data) => {
+        this.props.actions.initCities();
+        this.setState({ refreshing: false });
+        /*AsyncStorage.getItem('cities').then((data) => {
             this.props.navigation.setParams({ count: JSON.parse(data).length });
             //this.setState({ cities: JSON.parse(data).sort(), refreshing: false });
             this.props.actions.loadCities(JSON.parse(data));
             this.setState({ refreshing: false });
-        });
+        });*/
         //this.setState({cities: this.props.cities});
     }
 
@@ -94,7 +97,7 @@ const mapStateToProps = (stateStore) => {
 
 const mapActionsToProps = (payload) => ({
     actions: {
-        loadCities: bindActionCreators(init, payload)
+        initCities: bindActionCreators(initAsync, payload)
     }
 });
 
