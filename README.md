@@ -1,0 +1,2 @@
+# redux
+react w redux
